@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "fog-of-war-react-native",
+    "scheme": "fog-of-war-react-native",
     "slug": "fog-of-war-react-native",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,6 +25,7 @@
       }
     },
     "web": {
+      "bundler": "metro",
       "favicon": "./assets/favicon.png"
     }
   }
