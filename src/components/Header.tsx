@@ -1,5 +1,5 @@
-import React from "react";
-import { Heading, Box, HStack, Flex } from "native-base";
+import React from 'react';
+import { Box, HStack, Flex } from 'native-base';
 
 type Props = {
   title: React.ReactNode;
@@ -12,27 +12,27 @@ const Header: React.FC<Props> = ({ title, right, left }) => {
     <Flex
       direction="row"
       justify="space-between"
-      align={"center"}
-      backgroundColor={"primary.600"}
-      width={"100%"}
+      align={'center'}
+      backgroundColor={'primary.600'}
+      width={'100%'}
       height={12}
       padding={2}
       shadow={2}
     >
       <HStack
         width={10}
-        height={"100%"}
-        alignItems={"center"}
-        justifyContent={"flex-start"}
+        height={'100%'}
+        alignItems={'center'}
+        justifyContent={'flex-start'}
       >
         {left}
       </HStack>
       <Box flexGrow={1}>{title}</Box>
       <HStack
         width={10}
-        height={"100%"}
-        alignItems={"center"}
-        justifyContent={"flex-end"}
+        height={'100%'}
+        alignItems={'center'}
+        justifyContent={'flex-end'}
       >
         {right}
       </HStack>

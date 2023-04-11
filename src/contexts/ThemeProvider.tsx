@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 // import { useColorScheme } from "react-native";
-import { NativeBaseProvider, extendTheme } from "native-base";
-import { useFonts } from "@expo-google-fonts/fira-sans";
-import { customFonts, customTheme } from "../theme";
+import { NativeBaseProvider, extendTheme } from 'native-base';
+import { useFonts } from '@expo-google-fonts/fira-sans';
+import { customFonts, customTheme } from '../theme';
 
 const ThemeProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   // const colorScheme = useColorScheme();

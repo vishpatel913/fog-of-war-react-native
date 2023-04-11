@@ -1,6 +1,5 @@
-import React from "react";
-import { Box } from "native-base";
-import AppHeader from "./AppHeader";
+import React from 'react';
+import { Box } from 'native-base';
 
 const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (

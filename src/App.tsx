@@ -1,14 +1,16 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ThemeProvider } from "./contexts";
-import { Auth, Home } from "./views";
-import { AppHeader, AppLayout } from "./containers";
-import { useTheme } from "native-base";
+import React from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ThemeProvider } from './contexts';
+import { Auth, Home } from './views';
+import { AppHeader } from './containers';
+import { StackParamList } from './types';
+
+import '../firebaseConfig';
 
 const App: React.FC = () => {
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<StackParamList>();
 
   return (
     <ThemeProvider>
