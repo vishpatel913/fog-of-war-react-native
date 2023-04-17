@@ -1,20 +1,15 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import {
-  getAuth,
-  onAuthStateChanged,
-  signOut,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
+import { useState, useEffect, useMemo } from 'react';
+import { Firebase } from '../services';
 // import { useNavigation, useRoute } from '@react-navigation/native';
 import { User } from '../types';
 
 const useAuthentication = () => {
   const [authUser, setAuthUser] = useState<User>();
-  const auth = getAuth();
+  const firebase = useMemo(() => new Firebase(), []);
   const isLoggedIn = useMemo(() => !!authUser, [authUser]);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
+    const unsubscribe = firebase.onAuthStateChanged(user => {
       console.log('onAuthStateChanged', user);
       if (user) {
         setAuthUser(state =>
@@ -32,28 +27,26 @@ const useAuthentication = () => {
     });
 
     return unsubscribe;
-  }, [auth]);
+  }, [firebase]);
 
-  const logout = useCallback(() => {
-    signOut(auth);
-  }, [auth]);
+  // const logout = useCallback(() => {
+  //   firebase.signOut();
+  // }, [firebase]);
 
-  const loginWithCredential = useCallback(
-    async (email: string, password: string) => {
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-        throw new Error('Invalid credentials');
-      }
-    },
-    [auth],
-  );
+  // const loginWithCredential = useCallback(
+  //   async (email: string, password: string) => {
+  //     try {
+  //       await firebase.signInWithEmailAndPassword(email, password);
+  //     } catch (error) {
+  //       throw new Error('Invalid credentials');
+  //     }
+  //   },
+  //   [firebase],
+  // );
 
   return {
     isLoggedIn,
     user: authUser,
-    loginWithCredential,
-    logout,
   };
 };
 
