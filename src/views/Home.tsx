@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box } from 'native-base';
 import { AppLayout } from '../containers';
-import { useAuthentication } from '../hooks';
+import { useFirebaseAuth } from '../contexts';
 
 const Main: React.FC = () => {
-  const { user } = useAuthentication();
+  const { user } = useFirebaseAuth();
   return (
     <AppLayout>
       Map will go here

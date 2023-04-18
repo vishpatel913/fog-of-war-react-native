@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ThemeProvider } from './contexts';
+import { FirebaseAuthProvider, ThemeProvider } from './contexts';
 import { Auth, Home } from './views';
 import { AppHeader } from './containers';
 import { StackParamList } from './types';
@@ -14,13 +14,15 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ header: () => <AppHeader /> }}>
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Auth" component={Auth} />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <StatusBar style="auto" hidden />
+      <FirebaseAuthProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ header: () => <AppHeader /> }}>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Auth" component={Auth} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <StatusBar style="auto" hidden />
+      </FirebaseAuthProvider>
     </ThemeProvider>
   );
 };

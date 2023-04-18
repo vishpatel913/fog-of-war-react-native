@@ -3,11 +3,12 @@ import { Heading, Icon, IconButton } from 'native-base';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 
-import { Header } from '../../components';
 import UserMenu from './UserMenu';
+import { Header } from '../../components';
+import { StackNavigateProps } from '../../types';
 
 const AppHeader = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<StackNavigateProps>();
   const routeIndex = useNavigationState(state => state.index);
 
   return (

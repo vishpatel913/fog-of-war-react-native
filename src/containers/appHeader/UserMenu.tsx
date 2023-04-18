@@ -1,12 +1,13 @@
 import React from 'react';
-import { Divider, Icon, IconButton, Menu } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import { useAuthentication } from '../../hooks';
-import { Firebase } from '../../services';
+import { Divider, Icon, IconButton, Menu } from 'native-base';
+import { useFirebaseAuth } from '../../contexts';
+import { StackNavigateProps } from '../../types';
 
 const UserMenu = () => {
-  const { isLoggedIn } = useAuthentication();
-  const firebase = new Firebase();
+  const navigation = useNavigation<StackNavigateProps>();
+  const { isLoggedIn, logOut } = useFirebaseAuth();
 
   return (
     <Menu
@@ -16,24 +17,15 @@ const UserMenu = () => {
         <IconButton
           icon={<Icon as={Feather} name="user" size={'md'} color={'white'} />}
           variant={'solid'}
-          {...(isLoggedIn ? { ...triggerProps } : { onPress: () => null })}
-          {...triggerProps}
+          {...(isLoggedIn
+            ? { ...triggerProps }
+            : { onPress: () => navigation.navigate('Auth') })}
         />
       )}
     >
-      <Menu.Item
-        onPress={() =>
-          firebase.signInWithEmailAndPassword(
-            'vishpatel913@googlemail.com',
-            'testfog',
-          )
-        }
-      >
-        Test sign in
-      </Menu.Item>
       <Menu.Item>Account</Menu.Item>
       <Divider mt="3" w="100%" />
-      <Menu.Item onPress={() => firebase.signOut()}>Sign out</Menu.Item>
+      <Menu.Item onPress={logOut}>Sign out</Menu.Item>
     </Menu>
   );
 };
