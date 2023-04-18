@@ -1,12 +1,38 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react';
 import {
   getAuth,
   onAuthStateChanged,
   signOut,
   signInWithEmailAndPassword,
+  UserCredential as IUserCredential,
 } from 'firebase/auth';
 import { User } from '../types';
-import FirebaseAuthContext from './FirebaseAuthContext';
+
+interface IContext {
+  user: User | null;
+  isLoggedIn: boolean;
+  logInWithEmailAndPassword(
+    email: string,
+    password: string,
+  ): Promise<IUserCredential | null>;
+  logOut(): Promise<void>;
+}
+
+const initialContext: IContext = {
+  user: null,
+  isLoggedIn: false,
+  logInWithEmailAndPassword: () => Promise.resolve(null),
+  logOut: () => Promise.resolve(),
+};
+
+const FirebaseAuthContext = createContext<IContext>(initialContext);
 
 const FirebaseAuthProvider: React.FC<React.PropsWithChildren> = ({
   children,
@@ -61,5 +87,7 @@ const FirebaseAuthProvider: React.FC<React.PropsWithChildren> = ({
     </FirebaseAuthContext.Provider>
   );
 };
+
+export const useFirebaseAuth = () => useContext(FirebaseAuthContext);
 
 export default FirebaseAuthProvider;

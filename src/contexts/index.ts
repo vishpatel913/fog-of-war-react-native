@@ -1,6 +1,6 @@
 export { default as ThemeProvider } from './ThemeProvider';
+
 export {
-  default as FirebaseAuthContext,
+  default as FirebaseAuthProvider,
   useFirebaseAuth,
-} from './FirebaseAuthContext';
-export { default as FirebaseAuthProvider } from './FirebaseAuthProvider';
+} from './FirebaseAuth';
