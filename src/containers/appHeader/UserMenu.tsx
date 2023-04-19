@@ -2,12 +2,14 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { Divider, Icon, IconButton, Menu } from 'native-base';
-import { useFirebaseAuth } from '../../contexts';
+import { useUserContext } from '../../contexts';
+import { FirebaseAuth } from '../../services';
 import { StackNavigateProps } from '../../types';
 
 const UserMenu = () => {
   const navigation = useNavigation<StackNavigateProps>();
-  const { isLoggedIn, logOut } = useFirebaseAuth();
+  const { isLoggedIn } = useUserContext();
+  const auth = new FirebaseAuth();
 
   return (
     <Menu
@@ -25,7 +27,7 @@ const UserMenu = () => {
     >
       <Menu.Item>Account</Menu.Item>
       <Divider mt="3" w="100%" />
-      <Menu.Item onPress={logOut}>Sign out</Menu.Item>
+      <Menu.Item onPress={() => auth.signOut()}>Sign out</Menu.Item>
     </Menu>
   );
 };

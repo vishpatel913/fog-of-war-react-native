@@ -2,17 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Button } from 'native-base';
 import { AppLayout } from '../containers';
-import { useFirebaseAuth } from '../contexts';
+import { useUserContext } from '../contexts';
+import { FirebaseAuth } from '../services';
 import { StackNavigateProps } from '../types';
 
 const Auth: React.FC = () => {
   const [isLoading, setLoading] = useState(false);
   const navigation = useNavigation<StackNavigateProps>();
-  const { logInWithEmailAndPassword, isLoggedIn } = useFirebaseAuth();
+  const { isLoggedIn } = useUserContext();
+  const auth = new FirebaseAuth();
 
   const handleLogin = async () => {
     setLoading(true);
-    await logInWithEmailAndPassword('vishpatel913@googlemail.com', 'testfog');
+    await auth.signInWithEmailAndPassword(
+      'vishpatel913@googlemail.com',
+      'testfog',
+    );
   };
 
   useEffect(() => {
