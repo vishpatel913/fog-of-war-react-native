@@ -14,10 +14,7 @@ const Auth: React.FC = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-    await auth.signInWithEmailAndPassword(
-      'vishpatel913@googlemail.com',
-      'testfog',
-    );
+    await auth.signInWithEmailAndPassword('vish@vishpatel.com', 'testfog');
   };
 
   useEffect(() => {

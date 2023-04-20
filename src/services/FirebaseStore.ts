@@ -1,13 +1,21 @@
-import { doc, getFirestore, Firestore as IFirestore } from 'firebase/firestore';
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  Firestore as IFirestore,
+  setDoc,
+} from 'firebase/firestore';
 import { User } from '../types';
 
-enum StoreKeys {
+enum CollectionKey {
   USERS = 'users',
 }
 
 type StoreData = {
-  [StoreKeys.USERS]: User;
+  [CollectionKey.USERS]: User;
 };
+
+type CollectionKeyArg = `${CollectionKey}`;
 
 class FirebaseStore {
   database: IFirestore;
@@ -16,11 +24,26 @@ class FirebaseStore {
     this.database = getFirestore();
   }
 
-  getDocumentRef(collectionKey: string, ...path: string[]) {
-    return doc(this.database, collectionKey, ...path);
+  getDocumentRef(key: CollectionKeyArg, ...path: string[]) {
+    return doc(this.database, key, ...path);
   }
 
-  // async addDocument() {}
+  async addDocument(
+    key: CollectionKeyArg,
+    payload: StoreData[CollectionKeyArg],
+  ) {
+    const docRef = this.getDocumentRef(key, payload.id);
+    await setDoc(docRef, payload);
+  }
+
+  async getDocument<K extends CollectionKey>(key: `${K}`, id: string) {
+    const docRef = this.getDocumentRef(key, id);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) return null;
+
+    return docSnap.data() as StoreData[K];
+  }
 }
 
 export default FirebaseStore;

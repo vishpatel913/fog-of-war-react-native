@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useMemo,
 } from 'react';
-import { FirebaseAuth } from '../services';
+import { FirebaseAuth, FirebaseStore } from '../services';
 import { User } from '../types';
 
 interface IContext {
@@ -22,28 +22,28 @@ const UserContext = createContext<IContext>(initialContext);
 
 const UserProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [authUser, setAuthUser] = useState<User | null>(null);
-  const auth = useMemo(() => new FirebaseAuth(), []);
   const isLoggedIn = useMemo(() => !!authUser, [authUser]);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const auth = new FirebaseAuth();
+    const store = new FirebaseStore();
+    const unsubscribe = auth.onAuthStateChanged(async user => {
       if (user) {
-        setAuthUser(state =>
-          state?.id === user.uid
-            ? state
-            : {
-                id: user.uid,
-                displayName: user.displayName,
-                email: user.email,
-              },
-        );
+        const userDocument = await store.getDocument('users', user.uid);
+        const nextUser = {
+          id: user.uid,
+          displayName: userDocument?.displayName || user.displayName,
+          email: userDocument?.email || user.email,
+          photoURL: userDocument?.photoURL || user.photoURL,
+        };
+        setAuthUser(state => (state?.id === user.uid ? state : nextUser));
       } else {
         setAuthUser(null);
       }
     });
 
     return unsubscribe;
-  }, [auth]);
+  }, []);
 
   const context = useMemo(
     () => ({
