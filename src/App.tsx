@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { UserProvider, ThemeProvider } from './contexts';
-import { Auth, Home } from './views';
+import { AuthScreen, HomeScreen } from './views';
 import { AppHeader } from './containers';
 import { StackParamList } from './types';
 
@@ -17,8 +17,8 @@ const App: React.FC = () => {
       <UserProvider>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ header: () => <AppHeader /> }}>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Auth" component={Auth} />
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Auth" component={AuthScreen} />
           </Stack.Navigator>
         </NavigationContainer>
         <StatusBar style="auto" hidden />
