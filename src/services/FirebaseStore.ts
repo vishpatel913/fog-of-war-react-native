@@ -36,8 +36,8 @@ class FirebaseStore {
     await setDoc(docRef, payload);
   }
 
-  async getDocument<K extends CollectionKey>(key: `${K}`, id: string) {
-    const docRef = this.getDocumentRef(key, id);
+  async getDocument<K extends CollectionKey>(key: `${K}`, path: string) {
+    const docRef = this.getDocumentRef(key, path);
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) return null;
