@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { UserProvider, ThemeProvider } from './contexts';
 import { AuthScreen, HomeScreen } from './views';
-import { AppHeader } from './containers';
+import { AppHeader } from './components';
 import { StackParamList } from './types';
 
 import '../firebaseConfig';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Button } from 'native-base';
-import { AppLayout } from '../containers';
+import { AppLayout } from '../components';
 import { useUserContext } from '../contexts';
 import { FirebaseAuth } from '../services';
 import { StackNavigateProps } from '../types';

@@ -8,7 +8,7 @@ import { StackNavigateProps } from '../../types';
 
 const UserMenu = () => {
   const navigation = useNavigation<StackNavigateProps>();
-  const { isLoggedIn } = useUserContext();
+  const { isLoggedIn, user } = useUserContext();
   const auth = new FirebaseAuth();
 
   return (
@@ -25,8 +25,10 @@ const UserMenu = () => {
         />
       )}
     >
-      <Menu.Item>Account</Menu.Item>
-      <Divider mt="3" w="100%" />
+      <Menu.Group title={user?.displayName || ''}>
+        <Menu.Item>Account</Menu.Item>
+      </Menu.Group>
+      <Divider marginY={2} width="100%" />
       <Menu.Item onPress={() => auth.signOut()}>Sign out</Menu.Item>
     </Menu>
   );

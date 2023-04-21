@@ -1,1 +1,3 @@
-export { default as Header } from './Header';
+export { AppHeader } from './appHeader';
+export { FogMap } from './fogMap';
+export { default as AppLayout } from './AppLayout';

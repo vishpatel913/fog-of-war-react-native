@@ -4,7 +4,7 @@ import { useNavigation, useNavigationState } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 
 import UserMenu from './UserMenu';
-import { Header } from '../../components';
+import Header from './Header';
 import { StackNavigateProps } from '../../types';
 
 const AppHeader = () => {
