@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Polyline, Region } from 'react-native-maps';
+import React, { useRef, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 import { useLocation } from '../../hooks';
-import { testRoute } from '../../test/mockCoords';
-import MaskedView from '@react-native-masked-view/masked-view';
+import { Coordinates, Region } from '../../types';
+
+import FogOverlay from './FogOverlay';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,35 +15,37 @@ const styles = StyleSheet.create({
 });
 
 const FogMap = () => {
-  // const [region, setRegion] = useState<Region>();
+  const mapRef = useRef<any>();
   const currentCoordinates = useLocation();
-  const lineCoords = testRoute.map(([longitude, latitude]) => ({
-    latitude,
-    longitude,
-  }));
-
   const initialRegion = {
     ...currentCoordinates,
     latitudeDelta: 0.0212,
     longitudeDelta: 0.0121,
   };
+  const [region, setRegion] = useState<Region>(initialRegion);
+  const [mapBoundary, setMapBoundary] = useState<Coordinates>();
 
-  // React.useEffect(() => {
-  //   console.log('region :>> ', region);
-  // }, [region]);
+  const handleRegionChange = async (value: Region) => {
+    setRegion(value);
+    const boundary = await mapRef.current?.getMapBoundaries();
+    setMapBoundary({
+      latitude: boundary.northEast.latitude,
+      longitude: boundary.southWest.longitude,
+    });
+  };
 
   return (
     <>
       <MapView
+        ref={mapRef}
         style={styles.container}
         provider={PROVIDER_GOOGLE}
         region={initialRegion}
         showsBuildings={false}
         showsUserLocation
-        // onRegionChange={value => setRegion(value)}
-      >
-        <Polyline coordinates={lineCoords} strokeWidth={5} />
-      </MapView>
+        onRegionChange={handleRegionChange}
+      />
+      <FogOverlay region={region} northWestCoordinates={mapBoundary} />
     </>
   );
 };
