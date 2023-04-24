@@ -9,3 +9,8 @@ export type CoordinatesDelta = {
 };
 
 export type Region = Coordinates & CoordinatesDelta;
+
+export type MapBoundingBox = {
+  northEast: Coordinates;
+  southWest: Coordinates;
+};
