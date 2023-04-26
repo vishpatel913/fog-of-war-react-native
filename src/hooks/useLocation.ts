@@ -3,8 +3,8 @@ import { Coordinates } from './../types';
 import * as Location from 'expo-location';
 
 const DEFAULT_COORDS = {
-  latitude: 51.5140474,
-  longitude: -0.1139774,
+  latitude: 51.5286416,
+  longitude: -0.1015987,
 };
 
 const useLocation = () => {

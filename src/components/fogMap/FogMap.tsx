@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import { StyleSheet } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Overlay, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import { useLocation } from '../../hooks';
 import { Region, MapBoundingBox } from '../../types';
@@ -14,9 +14,10 @@ import { Region, MapBoundingBox } from '../../types';
 import FogOverlay from './FogOverlay';
 
 const styles = StyleSheet.create({
-  container: {
+  map: {
     alignSelf: 'stretch',
     height: '100%',
+    ...StyleSheet.absoluteFillObject,
   },
 });
 
@@ -46,11 +47,15 @@ const FogMap = () => {
     handleRegionChange(initialRegion);
   }, [handleRegionChange, initialRegion]);
 
+  // useEffect(() => {
+  //   mapRef.current.
+  // }, [third])
+
   return (
     <>
       <MapView
         ref={mapRef}
-        style={styles.container}
+        style={styles.map}
         provider={PROVIDER_GOOGLE}
         region={initialRegion}
         showsBuildings={false}
