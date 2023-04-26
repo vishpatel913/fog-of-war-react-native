@@ -6,7 +6,7 @@ import { useUserContext } from '../../contexts';
 import { FirebaseAuth } from '../../services';
 import { StackNavigateProps } from '../../types';
 
-const UserMenu = () => {
+const UserMenu: React.FC = () => {
   const navigation = useNavigation<StackNavigateProps>();
   const { isLoggedIn, user } = useUserContext();
   const auth = new FirebaseAuth();

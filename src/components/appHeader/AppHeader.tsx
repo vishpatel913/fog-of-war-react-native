@@ -7,7 +7,7 @@ import UserMenu from './UserMenu';
 import Header from './Header';
 import { StackNavigateProps } from '../../types';
 
-const AppHeader = () => {
+const AppHeader: React.FC = () => {
   const navigation = useNavigation<StackNavigateProps>();
   const routeIndex = useNavigationState(state => state.index);
 
