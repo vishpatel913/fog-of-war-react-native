@@ -8,7 +8,7 @@ import { G, Line, Path, Svg } from 'react-native-svg';
 import { transformCoordinatesToScreen } from './coordMaths';
 import { Coordinates, MapBoundingBox, Region } from '../../types';
 
-import { testRoute } from '../../test/mockCoords';
+import { parkRoute, pubRoute } from '../../test/mockCoords';
 
 type Props = {
   region: Region;
@@ -63,16 +63,31 @@ const FogOverlay: React.FC<Props> = ({ region, mapBoundary }) => {
     };
   };
 
-  const graphData: any = [makeGraph(testRoute as CoordTuple[])];
+  const graphData: any = [parkRoute, pubRoute].map(route =>
+    makeGraph(route as CoordTuple[]),
+  );
 
   return (
-    <Box position={'absolute'}>
-      <Svg height={overlayHeight} width={overlayWidth} stroke="#6231ff">
-        <G y={0}>
-          <Path d={graphData[0].line} strokeWidth="8" />
-        </G>
-      </Svg>
-    </Box>
+    <>
+      <Box
+        backgroundColor={'#00000080'}
+        height={'100%'}
+        width={'100%'}
+        pointerEvents={'box-none'}
+      >
+        <Svg
+          height={overlayHeight}
+          width={overlayWidth}
+          stroke={theme.colors.primary[600]}
+        >
+          <G y={0}>
+            {graphData.map(({ line }: any, index: number) => (
+              <Path key={`${index}`} d={line} strokeWidth={10} />
+            ))}
+          </G>
+        </Svg>
+      </Box>
+    </>
   );
 };
 
